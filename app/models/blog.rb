@@ -7,13 +7,15 @@ class Blog < ApplicationRecord
 
   validates :title, :content, presence: true
 
-  scope :published, -> { where('secret = FALSE') }
+  scope :published, -> { where('secret = false') }
 
   scope :search, lambda { |term|
     where("title LIKE ? OR content LIKE ?", "%#{term}%", "%#{term}%")
   }
 
   scope :default_order, -> { order(id: :desc) }
+
+  scope :blogs_select, -> { where("secret OR user_id", "true", "current_user")}
 
   def owned_by?(target_user)
     user == target_user
