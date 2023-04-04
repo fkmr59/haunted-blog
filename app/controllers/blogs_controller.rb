@@ -46,8 +46,7 @@ class BlogsController < ApplicationController
   private
 
   def set_blog
-    @blog = Blog.find(params[:id])
-    redirect_to(blogs_path) unless @blog.user == current_user
+    @blog = current_user.blogs.find(params[:id])
   end
 
   def blog_params
