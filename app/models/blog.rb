@@ -15,7 +15,7 @@ class Blog < ApplicationRecord
 
   scope :default_order, -> { order(id: :desc) }
 
-  scope :blogs_select, -> { where("secret OR user_id", "true", "current_user")}
+  scope :blogs_select, ->(current_user) { where(secret: false).or(where(user_id: current_user.id)) }
 
   def owned_by?(target_user)
     user == target_user
