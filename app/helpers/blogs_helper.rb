@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 module BlogsHelper
+  include ActionView::Helpers::SanitizeHelper
+
   def format_content(blog)
-    h(blog.content).gsub("\n", '<br>').html_safe # rubocop:disable Rails/OutputSafety
+    sanitize(blog.content, tags: %w(br), attributes: %w())
   end
 end
